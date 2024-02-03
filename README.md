@@ -1,7 +1,7 @@
 # eframe template
 
-[![dependency status](https://deps.rs/repo/github/wzzju/egui_study/status.svg)](https://deps.rs/repo/github/wzzju/egui_study)
-[![Build Status](https://github.com/wzzju/egui_study/workflows/CI/badge.svg)](https://github.com/wzzju/egui_study/actions?workflow=CI)
+[![dependency status](https://deps.rs/repo/github/wzzju/egui_app/status.svg)](https://deps.rs/repo/github/wzzju/egui_app)
+[![Build Status](https://github.com/wzzju/egui_app/workflows/CI/badge.svg)](https://github.com/wzzju/egui_app/actions?workflow=CI)
 
 > This repo is forked from <https://github.com/emilk/eframe_template/>. 
 
@@ -13,28 +13,28 @@ You can compile your app natively or for the web, and share it using Github Page
 
 ## Getting started
 
-Start by clicking "Use this template" at https://github.com/wzzju/egui_study/ or follow [these instructions](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template).
+Start by clicking "Use this template" at https://github.com/wzzju/egui_app/ or follow [these instructions](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template).
 
 Change the name of the crate: Chose a good name for your project, and change the name to it in:
 * `Cargo.toml`
-    * Change the `package.name` from `egui_study` to `your_crate`.
+    * Change the `package.name` from `egui_app` to `your_crate`.
     * Change the `package.authors`
 * `main.rs`
-    * Change `egui_study::TemplateApp` to `your_crate::TemplateApp`
+    * Change `egui_app::TemplateApp` to `your_crate::TemplateApp`
 * `index.html`
     * Change the `<title>eframe template</title>` to `<title>your_crate</title>`. optional.
 * `assets/sw.js`
-  * Change the `'./egui_study.js'` to `./your_crate.js` (in `filesToCache` array)
-  * Change the `'./egui_study_bg.wasm'` to `./your_crate_bg.wasm` (in `filesToCache` array)
+  * Change the `'./egui_app.js'` to `./your_crate.js` (in `filesToCache` array)
+  * Change the `'./egui_app_bg.wasm'` to `./your_crate_bg.wasm` (in `filesToCache` array)
 
 ```shell
 # Linux
-sed -i 's/egui_study/your_crate/g' `grep "egui_study" -rl .`
-sed -i 's,egui study app,your_crate,g' `grep "egui study app" -rl .`
+sed -i 's/egui_app/your_crate/g' `grep "egui_app" -rl .`
+sed -i 's,egui app,your_crate,g' `grep "egui app" -rl .`
 
 # MacOS
-sed -i '' 's/egui_study/your_crate/g' `grep "egui_study" -rl .`
-sed -i '' 's,egui study app,your_crate,g' `grep "egui study app" -rl .`
+sed -i '' 's/egui_app/your_crate/g' `grep "egui_app" -rl .`
+sed -i '' 's,egui app,your_crate,g' `grep "egui app" -rl .`
 
 # if you change your default branch, you shoud do:
 sed -i 's,- main,- your_default_branch,g' .github/workflows/pages.yml # Linux
@@ -45,7 +45,7 @@ sed -i '' 's,- main,- your_default_branch,g' .github/workflows/pages.yml # MacOS
 
 `src/app.rs` contains a simple example app. This is just to give some inspiration - most of it can be removed if you like.
 
-The official egui docs are at <https://docs.rs/egui>. If you prefer watching a video introduction, check out <https://www.youtube.com/watch?v=NtUkr_z7l84>. For inspiration, check out the [the egui study app](https://emilk.github.io/egui/index.html) and follow the links in it to its source code.
+The official egui docs are at <https://docs.rs/egui>. If you prefer watching a video introduction, check out <https://www.youtube.com/watch?v=NtUkr_z7l84>. For inspiration, check out the [the egui app](https://emilk.github.io/egui/index.html) and follow the links in it to its source code.
 
 ### Testing locally
 
@@ -83,10 +83,18 @@ We use [Trunk](https://trunkrs.dev/) to build for web target.
 >
 > If `gh-pages` is not available in `Source`, just create and push a branch called `gh-pages` and it should be available.
 
-You can test the template app at <https://wzzju.github.io/egui_study/>.
+```shell
+git checkout --orphan gh-pages
+git rm --cached -r .
+git add README.md
+git commit -m "Init Deploy."
+git push origin gh-pages:gh-pages
+```
+
+You can test the template app at <https://wzzju.github.io/egui_app/>.
 
 ## Updating egui
 
-As of 2023, egui is in active development with frequent releases with breaking changes. [egui_study](https://github.com/wzzju/egui_study/) will be updated in lock-step to always use the latest version of egui.
+As of 2023, egui is in active development with frequent releases with breaking changes. [egui_app](https://github.com/wzzju/egui_app/) will be updated in lock-step to always use the latest version of egui.
 
 When updating `egui` and `eframe` it is recommended you do so one version at the time, and read about the changes in [the egui changelog](https://github.com/emilk/egui/blob/master/CHANGELOG.md) and [eframe changelog](https://github.com/emilk/egui/blob/master/crates/eframe/CHANGELOG.md).

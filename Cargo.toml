@@ -1,5 +1,5 @@
 [package]
-name = "egui_study"
+name = "egui_app"
 version = "0.1.0"
 authors = ["Zhen Wang <wzzjuustc@gmail.com>"]
 edition = "2021"
