@@ -4,7 +4,15 @@ version = "0.1.0"
 authors = ["Zhen Wang <wzzjuustc@gmail.com>"]
 edition = "2021"
 rust-version = "1.75"
+include = [
+    "assets/icon-256.png",
+]
 
+[features]
+default = []
+chrono = ["egui_extras/datepicker"]
+## Allow serialization using [`serde`](https://docs.rs/serde).
+serde = ["egui/serde", "egui_plot/serde"]
 
 [dependencies]
 egui = "0.25.0"
@@ -18,6 +26,9 @@ log = "0.4"
 
 # You only need serde if you want app persistence:
 serde = { version = "1", features = ["derive"] }
+egui_plot = "0.25.0"
+egui_extras = { version = "0.25.0", default-features = false, features = ["chrono"] }
+chrono = { version = "0.4.33", features = ["js-sys", "wasmbind"]  }
 
 # native:
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
