@@ -49,6 +49,9 @@ impl Default for TemplateApp {
 impl TemplateApp {
     /// Called once before the first frame.
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
+        // This gives us image support:
+        egui_extras::install_image_loaders(&cc.egui_ctx);
+
         // This is also where you can customize the look and feel of egui using
         // `cc.egui_ctx.set_visuals` and `cc.egui_ctx.set_fonts`.
 
@@ -206,6 +209,14 @@ impl TemplateApp {
         example_plot(ui);
         ui.end_row();
 
+        ui.hyperlink_to(
+            "Custom widget:",
+            super::toggle_switch::url_to_file_source_code(),
+        );
+        ui.add(crate::toggle_switch::toggle(boolean)).on_hover_text(
+            "It's easy to create your own widgets!\n\
+            This toggle switch is just 15 lines of code.",
+        );
         ui.end_row();
     }
 }
@@ -242,7 +253,7 @@ impl eframe::App for TemplateApp {
 
         egui::CentralPanel::default().show(ctx, |ui| {
             // The central panel the region left after adding TopPanel's and SidePanel's
-            ui.heading("eframe template");
+            ui.heading("egui web app");
 
             ui.horizontal(|ui| {
                 ui.label("Write something: ");
@@ -255,45 +266,46 @@ impl eframe::App for TemplateApp {
             }
 
             ui.separator();
-        ui.add_enabled_ui(self.enabled, |ui| {
-            ui.set_visible(self.visible);
 
-            egui::Grid::new("my_grid")
-                .num_columns(2)
-                .spacing([40.0, 4.0])
-                .striped(true)
-                .show(ui, |ui| {
-                    self.gallery_grid_contents(ui);
-                });
-        });
+            ui.add_enabled_ui(self.enabled, |ui| {
+                ui.set_visible(self.visible);
 
-        ui.separator();
+                egui::Grid::new("my_grid")
+                    .num_columns(2)
+                    .spacing([40.0, 4.0])
+                    .striped(true)
+                    .show(ui, |ui| {
+                        self.gallery_grid_contents(ui);
+                    });
+            });
 
-        ui.horizontal(|ui| {
-            ui.checkbox(&mut self.visible, "Visible")
-                .on_hover_text("Uncheck to hide all the widgets.");
-            if self.visible {
-                ui.checkbox(&mut self.enabled, "Interactive")
-                    .on_hover_text("Uncheck to inspect how the widgets look when disabled.");
-            }
-        });
+            ui.separator();
 
-        ui.separator();
+            ui.horizontal(|ui| {
+                ui.checkbox(&mut self.visible, "Visible")
+                    .on_hover_text("Uncheck to hide all the widgets.");
+                if self.visible {
+                    ui.checkbox(&mut self.enabled, "Interactive")
+                        .on_hover_text("Uncheck to inspect how the widgets look when disabled.");
+                }
+            });
 
-        ui.vertical_centered(|ui| {
-            let tooltip_text = "The full egui documentation.\nYou can also click the different widgets names in the left column.";
-            ui.hyperlink("https://docs.rs/egui/").on_hover_text(tooltip_text);
-            ui.add(egui::github_link_file!(
-                "https://github.com/wzzju/egui_app/blob/main/",
-                "Source code."
-            ));
-        });
+            ui.separator();
+
+            ui.vertical_centered(|ui| {
+                let tooltip_text = "The full egui documentation.\nYou can also click the different widgets names in the left column.";
+                ui.hyperlink("https://docs.rs/egui/").on_hover_text(tooltip_text);
+                ui.add(egui::github_link_file!(
+                    "https://github.com/wzzju/egui_app/blob/main/",
+                    "Source code."
+                ));
+            });
 
 
-        ui.with_layout(egui::Layout::bottom_up(egui::Align::LEFT), |ui| {
-            powered_by_egui_and_eframe(ui);
-            egui::warn_if_debug_build(ui);
-        });
+            ui.with_layout(egui::Layout::bottom_up(egui::Align::LEFT), |ui| {
+                powered_by_egui_and_eframe(ui);
+                egui::warn_if_debug_build(ui);
+            });
         });
     }
 }
@@ -324,8 +336,8 @@ fn example_plot(ui: &mut egui::Ui) -> egui::Response {
         .collect();
     let line = Line::new(line_points);
     egui_plot::Plot::new("example_plot")
-        .height(32.0)
-        .show_axes(false)
+        .height(150.0)
+        .show_axes(true)
         .data_aspect(1.0)
         .show(ui, |plot_ui| plot_ui.line(line))
         .response

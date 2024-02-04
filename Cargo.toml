@@ -27,8 +27,9 @@ log = "0.4"
 # You only need serde if you want app persistence:
 serde = { version = "1", features = ["derive"] }
 egui_plot = "0.25.0"
-egui_extras = { version = "0.25.0", default-features = false, features = ["chrono"] }
-chrono = { version = "0.4.33", features = ["js-sys", "wasmbind"]  }
+egui_extras = { version = "0.25.0", features = ["chrono", "all_loaders"] }
+image = { version = "0.24", features = ["jpeg", "png"] }
+chrono = { version = "0.4.33", features = ["js-sys", "wasmbind"] }
 
 # native:
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
