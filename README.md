@@ -20,7 +20,7 @@ Change the name of the crate: Chose a good name for your project, and change the
     * Change the `package.name` from `egui_app` to `your_crate`.
     * Change the `package.authors`
 * `main.rs`
-    * Change `egui_app::TemplateApp` to `your_crate::TemplateApp`
+    * Change `egui_app::PlotApp` to `your_crate::PlotApp`
 * `index.html`
     * Change the `<title>eframe template</title>` to `<title>your_crate</title>`. optional.
 * `assets/sw.js`

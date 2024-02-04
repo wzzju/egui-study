@@ -4,9 +4,6 @@ version = "0.1.0"
 authors = ["Zhen Wang <wzzjuustc@gmail.com>"]
 edition = "2021"
 rust-version = "1.75"
-include = [
-    "assets/icon-256.png",
-]
 
 [features]
 # Enable the `chrono` feature, which is equivalent to the following command:
@@ -28,8 +25,7 @@ log = "0.4"
 # You only need serde if you want app persistence:
 serde = { version = "1", features = ["derive"] }
 egui_plot = "0.25.0"
-egui_extras = { version = "0.25.0", features = ["all_loaders"] }
-image = { version = "0.24", features = ["jpeg", "png"] }
+egui_extras = "0.25.0"
 #! ### Optional dependencies
 chrono = { version = "0.4.33", optional = true, features = ["js-sys", "wasmbind"] }
 
@@ -49,11 +45,3 @@ opt-level = 2 # fast and small wasm
 opt-level = 2
 
 [patch.crates-io]
-
-# If you want to use the bleeding edge version of egui and eframe:
-# egui = { git = "https://github.com/emilk/egui", branch = "master" }
-# eframe = { git = "https://github.com/emilk/egui", branch = "master" }
-
-# If you fork https://github.com/emilk/egui you can test with:
-# egui = { path = "../egui/crates/egui" }
-# eframe = { path = "../egui/crates/eframe" }
