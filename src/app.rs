@@ -20,6 +20,7 @@ pub struct TemplateApp {
     color: egui::Color32,
     animate_progress_bar: bool,
 
+    #[cfg(feature = "chrono")]
     #[serde(skip)] // This how you opt-out of serialization of a field
     date: Option<chrono::NaiveDate>,
 
@@ -40,6 +41,7 @@ impl Default for TemplateApp {
             string: Default::default(),
             color: egui::Color32::LIGHT_BLUE.linear_multiply(0.5),
             animate_progress_bar: false,
+            #[cfg(feature = "chrono")]
             date: None,
             value: 2.7,
         }
@@ -75,6 +77,7 @@ impl TemplateApp {
             string,
             color,
             animate_progress_bar,
+            #[cfg(feature = "chrono")]
             date,
             value: _,
         } = self;
@@ -128,7 +131,6 @@ impl TemplateApp {
         ui.end_row();
 
         ui.add(doc_link_label("ComboBox", "ComboBox"));
-
         egui::ComboBox::from_label("Take your pick")
             .selected_text(format!("{radio:?}"))
             .show_ui(ui, |ui| {
@@ -180,14 +182,17 @@ impl TemplateApp {
         }
         ui.end_row();
 
-        let date = date.get_or_insert_with(|| chrono::offset::Utc::now().date_naive());
-        ui.add(doc_link_label_with_crate(
-            "egui_extras",
-            "DatePickerButton",
-            "DatePickerButton",
-        ));
-        ui.add(egui_extras::DatePickerButton::new(date));
-        ui.end_row();
+        #[cfg(feature = "chrono")]
+        {
+            let date = date.get_or_insert_with(|| chrono::offset::Utc::now().date_naive());
+            ui.add(doc_link_label_with_crate(
+                "egui_extras",
+                "DatePickerButton",
+                "DatePickerButton",
+            ));
+            ui.add(egui_extras::DatePickerButton::new(date));
+            ui.end_row();
+        }
 
         ui.add(doc_link_label("Separator", "separator"));
         ui.separator();
@@ -261,9 +266,14 @@ impl eframe::App for TemplateApp {
             });
 
             ui.add(egui::Slider::new(&mut self.value, 0.0..=10.0).text("value"));
-            if ui.button("Increment").clicked() {
-                self.value += 1.0;
-            }
+            ui.horizontal(|ui| {
+                if ui.button("Increase").clicked() {
+                    self.value += 1.0;
+                }
+                if ui.button("Decrease").clicked() {
+                    self.value -= 1.0;
+                }
+            });
 
             ui.separator();
 
@@ -300,7 +310,6 @@ impl eframe::App for TemplateApp {
                     "Source code."
                 ));
             });
-
 
             ui.with_layout(egui::Layout::bottom_up(egui::Align::LEFT), |ui| {
                 powered_by_egui_and_eframe(ui);
